@@ -1,0 +1,72 @@
+<h1>Posts and Comments</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Content</th>
+      <th>Created At</th>
+      <th>Record Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @records.each do |record| %>
+      <tr>
+        <td>
+          <!-- Display title for posts, but nothing for comments -->
+          <% if record.record_type == 'Post' %>
+            <%= record.title %>
+          <% else %>
+            <!-- Display nothing for comments under title column -->
+            &ndash;
+          <% end %>
+        </td>
+        <td>
+          <%= record.content %>
+        </td>
+        <td>
+          <%= record.created_at.strftime('%B %d, %Y %I:%M %p') %>
+        </td>
+        <td>
+          <%= record.record_type %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<!-- Table with Data -->
+<!-- Table with Data -->
+<h1>Posts and Comments Outer join</h1>
+<!-- Table with Data -->
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Content</th>
+      <th>Created At</th>
+      <th>Record Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @records_outer.each do |record| %>
+      <tr class="<%= 'post' if record['record_type'] == 'Post' %> <%= 'comment' if record['record_type'] == 'Comment' %>">
+        <td>
+          <!-- Display title for posts, but nothing for comments -->
+          <% if record['record_type'] == 'Post' %>
+            <%= record['title'] %>
+          <% else %>
+            &ndash;
+          <% end %>
+        </td>
+        <td>
+          <%= record['comment_content'] || record['post_content'] %>
+        </td>
+        <td>
+          <%= record['comment_created_at'] || record['post_created_at'] %>
+        </td>
+        <td>
+          <%= record['record_type'] %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
